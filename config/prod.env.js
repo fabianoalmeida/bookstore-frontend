@@ -1,4 +1,4 @@
 module.exports = {
-  API_URL: '"http://someplace-that-runs-your-backend"',
+  API_URL: '"http://localhost:3000/v1"',
   NODE_ENV: '"production"'
 }
