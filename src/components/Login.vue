@@ -4,8 +4,8 @@
       <form class="form-signin" @submit.prevent="login">
         <h2 class="form-signin-heading">Please sign in</h2>
         <div class="alert alert-danger" v-if="error">{{ error }}</div>
-        <label for="inputEmail" class="sr-only">Email address</label>
-        <input v-model="email" type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+        <label for="inputUsername" class="sr-only">Username</label>
+        <input v-model="username" type="username" id="inputUsername" class="form-control" placeholder="Username" required autofocus>
         <label for="inputPassword" class="sr-only">Password</label>
         <input v-model="password" type="password" id="inputPassword" class="form-control" placeholder="Password" required>
         <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
@@ -21,7 +21,7 @@ export default {
   name: 'Login',
   data () {
     return {
-      email: '',
+      username: '',
       password: '',
       error: false
     }
@@ -38,23 +38,23 @@ export default {
   methods: {
     checkCurrentLogin () {
       if (this.currentUser) {
-        this.$router.replace(this.$route.query.redirect || '/authors')
+        this.$router.replace(this.$route.query.redirect || '/users')
       }
     },
     login () {
-      this.$http.post('/auth', { user: this.email, password: this.password })
+      this.$http.post('/auth/login', { username: this.username, password: this.password })
         .then(request => this.loginSuccessful(request))
         .catch(() => this.loginFailed())
     },
     loginSuccessful (req) {
-      if (!req.data.token) {
+      if (!req.data.user.token) {
         this.loginFailed()
         return
       }
       this.error = false
-      localStorage.token = req.data.token
+      localStorage.token = req.data.user.token
       this.$store.dispatch('login')
-      this.$router.replace(this.$route.query.redirect || '/authors')
+      this.$router.replace(this.$route.query.redirect || '/users')
     },
     loginFailed () {
       this.error = 'Login failed!'
@@ -110,7 +110,7 @@ export default {
 .form-signin .form-control:focus {
   z-index: 2;
 }
-.form-signin input[type="email"] {
+.form-signin input[type="username"] {
   margin-bottom: -1px;
   border-bottom-right-radius: 0;
   border-bottom-left-radius: 0;

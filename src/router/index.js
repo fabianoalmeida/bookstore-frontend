@@ -16,12 +16,12 @@ export default new Router({
       component: Login
     },
     {
-      path: '/authors',
-      name: 'Authors',
+      path: '/users',
+      name: 'Users',
       component: AuthorsList
     },
     {
-      path: '/authors/:id',
+      path: '/users/:id',
       name: 'Author',
       component: SingleAuthor
     },

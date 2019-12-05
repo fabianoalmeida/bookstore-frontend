@@ -7,7 +7,7 @@
       <h1>All authors</h1>
     </div>
     <div class="row">
-      <Box v-for="author in authors" :key="author.id" :author="author" v-show="searchMatch(author.name)"></Box>
+      <Box v-for="author in authors" :key="author._id" :author="author" v-show="searchMatch(author.firstName)"></Box>
     </div>
   </div>
 </template>
@@ -24,16 +24,16 @@ export default {
     }
   },
   created () {
-    this.$http.get('/authors')
-        .then(request => this.buildAuthorList(request.data))
+    this.$http.get('/users', {headers: {'x-access-token': `${localStorage.token}`}})
+        .then(response => this.buildAuthorList(response.data))
         .catch(() => { alert('Something went wrong!') })
   },
   methods: {
     buildAuthorList (data) {
       this.authors = data
     },
-    searchMatch (authorName) {
-      return authorName.toLowerCase().match(this.searchRegExp)
+    searchMatch (firstName) {
+      return firstName.toLowerCase().match(this.searchRegExp)
     }
   },
   computed: {

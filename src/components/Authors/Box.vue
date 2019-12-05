@@ -1,8 +1,8 @@
 <template>
   <div class="col author text-center">
-    <router-link :to="{ name: 'Author', params: { id: author.id } }">
+    <router-link :to="{ name: 'Author', params: { id: author._id } }">
       <img :src="image"></img>
-      <p>{{ author.name }}</p>
+      <p>{{ author.firstName }}</p>
     </router-link>
   </div>
 </template>
@@ -13,7 +13,7 @@ export default {
   props: ['author'],
   data () {
     return {
-      image: `http://via.placeholder.com/200x200?text=${encodeURIComponent(this.author.name)}`
+      image: `http://via.placeholder.com/200x200?text=${encodeURIComponent(this.author.firstName)}`
     }
   },
   created () {
@@ -21,7 +21,7 @@ export default {
   },
   methods: {
     async pullImage () {
-      const response = await fetch(`http://api.duckduckgo.com/?q=${encodeURIComponent(this.author.name)}&format=json&pretty=1`)
+      const response = await fetch(`http://api.duckduckgo.com/?q=${encodeURIComponent(this.author.firstName)}&format=json&pretty=1`)
       const json = await response.json()
       if (json.Image) {
         this.image = json.Image

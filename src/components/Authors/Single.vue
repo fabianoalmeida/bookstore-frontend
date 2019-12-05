@@ -21,8 +21,8 @@ export default {
     }
   },
   created () {
-    this.$http.get(`/authors/${this.$route.params.id}`)
-        .then(request => { this.author = request.data })
+    this.$http.get(`/users/${this.$route.params.id}`, {headers: {'x-access-token': `${localStorage.token}`}})
+        .then(response => { this.author = response.data })
         .catch(() => { alert('Something went wrong!') })
   },
   components: {

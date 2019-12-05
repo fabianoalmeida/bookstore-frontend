@@ -4,7 +4,7 @@
       <div class="float-right">
         <input type="text" name="search" v-model="search" placeholder="Search..." class="form-control"></input>
       </div>
-      <h1>Books by {{ author.name }}</h1>
+      <h1>Books by {{ author.firstName }}</h1>
     </div>
     <div class="row">
       <div class="row col">
@@ -31,7 +31,7 @@ export default {
     }
   },
   created () {
-    this.$http.get(`/authors/${this.author.id}/books`)
+    this.$http.get(`/authors/${this.author._id}/books`)
         .then(request => { this.books = request.data })
         .catch(() => { alert('Something went wrong!') })
   },
